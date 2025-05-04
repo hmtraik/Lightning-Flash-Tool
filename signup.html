@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Account - Lightning Flash Tool</title>
+
+    <!-- Link the main style.css file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome (Optional, if you want icons later) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Add specific styles ONLY if absolutely necessary for centering/layout -->
+    <style>
+        /* Override body to center the signup box specifically for this page */
+        body.signup-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        /* Ensure error message uses error color */
+        .signup-error-message {
+             color: var(--error-color);
+             font-size: 0.85em;
+             margin-top: -10px;
+             margin-bottom: 15px;
+             min-height: 1.2em;
+             text-align: left;
+             display: none; /* Hidden by default */
+             white-space: pre-line;
+             font-weight: normal; /* Match CMD style */
+             font-family: inherit; /* Match CMD style */
+         }
+        .signup-error-message.show {
+             display: block;
+         }
+         /* Adjust width for signup container specifically */
+         .signup-form-container {
+            max-width: 450px;
+            width: 100%;
+         }
+    </style>
+</head>
+<body class="signup-page"> <!-- Added class for specific centering -->
+
+    <!-- Use classes from style.css for CMD theme -->
+    <div class="app-container tool-container signup-form-container">
+        <h1 class="tool-title">Create New Account</h1>
+
+        <form id="signupForm" novalidate>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password (min 8 chars)" required minlength="8">
+            </div>
+
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required>
+            </div>
+
+            <div id="errorMessage" class="signup-error-message"></div> <!-- Use specific class for error -->
+
+             <!-- Use tool-button class for styling -->
+            <button type="submit" class="tool-button" style="width: 100%; margin-top: 10px; margin-bottom: 20px;">Create Account</button>
+        </form>
+
+        <!-- Use auth-section class for styling -->
+        <div class="auth-section" style="margin-top: 15px;">
+            Already have an account? <a href="index.html" class="auth-link">Log In</a>
+            <br>
+            <a href="index.html" class="auth-link" style="font-size: 0.8em; margin-top: 10px; display: inline-block; font-weight: normal;">← Back to Main Tool</a>
+        </div>
+    </div>
+
+    <script>
+        // Inline JavaScript for signup (Account Creation Logic)
+        document.addEventListener('DOMContentLoaded', () => {
+            const signupForm = document.getElementById('signupForm');
+            const usernameInput = document.getElementById('username');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const errorMessageElement = document.getElementById('errorMessage'); // Target the correct ID
+
+            if (!signupForm || !usernameInput || !emailInput || !passwordInput || !confirmPasswordInput || !errorMessageElement) {
+                console.error("Signup form elements not found!");
+                return;
+            }
+
+            signupForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                errorMessageElement.textContent = '';
+                errorMessageElement.classList.remove('show'); // Use class to show/hide
+
+                // Clear previous error styles from inputs
+                usernameInput.style.borderColor = '';
+                emailInput.style.borderColor = '';
+                passwordInput.style.borderColor = '';
+                confirmPasswordInput.style.borderColor = '';
+
+                const username = usernameInput.value.trim();
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                let errors = [];
+                let firstErrorInput = null; // To focus on the first error
+
+                if (!username) {
+                     errors.push("Username is required.");
+                     usernameInput.style.borderColor = 'var(--error-color)';
+                     if(!firstErrorInput) firstErrorInput = usernameInput;
+                }
+                if (!email) {
+                    errors.push("Email is required.");
+                    emailInput.style.borderColor = 'var(--error-color)';
+                     if(!firstErrorInput) firstErrorInput = emailInput;
+                } else if (!/\S+@\S+\.\S+/.test(email)) {
+                    errors.push("Invalid email format.");
+                     emailInput.style.borderColor = 'var(--error-color)';
+                     if(!firstErrorInput) firstErrorInput = emailInput;
+                }
+                if (!password) {
+                    errors.push("Password is required.");
+                     passwordInput.style.borderColor = 'var(--error-color)';
+                     if(!firstErrorInput) firstErrorInput = passwordInput;
+                } else if (password.length < 8) {
+                    errors.push("Password must be at least 8 characters long.");
+                     passwordInput.style.borderColor = 'var(--error-color)';
+                    if(!firstErrorInput) firstErrorInput = passwordInput;
+                }
+                if (password !== confirmPassword) {
+                    errors.push("Passwords do not match.");
+                    confirmPasswordInput.style.borderColor = 'var(--error-color)';
+                    if(!firstErrorInput) firstErrorInput = confirmPasswordInput;
+                     // Also mark the first password field if they don't match and it wasn't already marked
+                     if (passwordInput.style.borderColor !== 'var(--error-color)') {
+                         passwordInput.style.borderColor = 'var(--error-color)';
+                     }
+                }
+
+                if (errors.length > 0) {
+                    errorMessageElement.textContent = errors.join('\n');
+                    errorMessageElement.classList.add('show');
+                    if (firstErrorInput) {
+                        firstErrorInput.focus(); // Focus the first field with an error
+                    }
+                    return;
+                }
+
+                // --- Account Creation Logic ---
+                console.log("Processing account creation with:", { username, email });
+                try {
+                    // Simulate saving - use localStorage
+                    localStorage.setItem('loggedInUser', username);
+                    console.log(`Stored username '${username}' in localStorage.`);
+
+                    // Show success and redirect
+                    alert("✅ Account created successfully!\n\nYou are now logged in.\n\nRedirecting...");
+                    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+
+                } catch (e) {
+                    console.error("Failed to write to localStorage:", e);
+                    errorMessageElement.textContent = "Error saving login state. Please try again.";
+                    errorMessageElement.classList.add('show');
+                }
+                // --- End Account Creation Logic ---
+            });
+        });
+    </script>
+</body>
+</html>

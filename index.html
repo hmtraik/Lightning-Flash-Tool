@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lightning Flash Tool (CMD Style)</title>
+
+    <!-- Link to the EXTERNAL style.css file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- External Libraries (CDNs) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+
+</head>
+<body>
+    <!-- Main App Container -->
+    <div class="app-container tool-container">
+        <h1 class="tool-title">Lightning Flash Tool</h1>
+
+        <div class="content-columns">
+            <!-- Left Column -->
+            <div class="left-column">
+                <div class="input-group">
+                    <label for="receiversAddress">Receiver's Address</label>
+                    <input type="text" id="receiversAddress" name="receiversAddress" placeholder="Enter recipient address (TRC20 or ERC20)">
+                </div>
+                 <div class="input-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" placeholder="Minimum 1,000" min="1000">
+                </div>
+
+                <!-- Fee Deposit Section -->
+                <div class="fee-deposit-section">
+                    <h3 class="section-title-small">Fee Deposit (USDT Network Fees)</h3>
+                    <div class="fee-item-condensed">
+                         <div class="fee-header">Tron (TRX)</div>
+                         <div class="fee-value">
+                             <span class="value" id="tron-balance-display">$0.00</span>
+                             <button class="add-button-small" id="addTronFeeBtn" data-network="tron" title="Show Tron Deposit Info ()">+</button>
+                         </div>
+                    </div>
+                    <div class="fee-item-condensed">
+                         <div class="fee-header">Ethereum (ETH)</div>
+                         <div class="fee-value">
+                             <span class="value" id="eth-balance-display">$0.00</span>
+                             <button class="add-button-small" id="addEthFeeBtn" data-network="ethereum" title="Show Ethereum Deposit Info ()">+</button>
+                         </div>
+                    </div>
+                    <!-- Deposit Status Message -->
+                    <div id="deposit-status" class="deposit-status-message compact"></div>
+                     <!-- Network Selection -->
+                     <div class="input-group compact-select">
+                        <label for="network">USDT Network (For Fee)</label>
+                         <div class="select-wrapper">
+                             <select id="network" name="network">
+                                 <option value="TRC20">TRC20 (Tron)</option>
+                                 <option value="ERC20">ERC20 (Ethereum)</option>
+                             </select>
+                         </div>
+                     </div>
+                </div>
+
+
+                <!-- Settings Box -->
+                <div class="settings-box">
+                    <div class="setting-section">
+                        <h3 class="section-title-small">Address Info</h3>
+                        <div class="checkbox-group">
+                             <input type="checkbox" id="customizeFee" name="customizeFee" checked>
+                             <!-- Label Removed -->
+                             <input type="text" id="feeRate" name="feeRate" placeholder="sat/byte" class="fee-input">
+                        </div>
+                         <div class="checkbox-group">
+                             <input type="checkbox" id="setDelay" name="setDelay">
+                             <label for="setDelay">Set randomized delay</label>
+                         </div>
+                        <div class="delay-inputs">
+                             <label for="minDelay">Min delay</label>
+                             <input type="number" id="minDelay" name="minDelay">
+                             <label for="dayDelay">Day delay</label>
+                             <input type="number" id="dayDelay" name="dayDelay" value="50">
+                         </div>
+                    </div>
+
+                    <div class="setting-section">
+                        <h3 class="section-title-small">Proxy Settings</h3>
+                        <div class="radio-group">
+                            <input type="radio" id="noProxy" name="proxyOption" value="noProxy">
+                            <label for="noProxy">Don't use proxy</label>
+                            <input type="radio" id="detectProxy" name="proxyOption" value="detectProxy" checked>
+                            <label for="detectProxy">Detect Default proxy</label>
+                        </div>
+                         <div class="radio-group">
+                            <input type="radio" id="transferable" name="transferOption" value="transferable" checked>
+                            <label for="transferable">Transferable</label>
+                            <input type="radio" id="notTransferable" name="transferOption" value="notTransferable">
+                            <label for="notTransferable">Not Transferable</label>
+                        </div>
+                        <div class="checkbox-group additional-options">
+                            <input type="checkbox" id="splitOption" name="splitOption" checked>
+                            <label for="splitOption">Split</label>
+                            <input type="checkbox" id="tradeOption" name="tradeOption" checked>
+                            <label for="tradeOption">Trade</label>
+                            <input type="checkbox" id="swapOption" name="swapOption" checked>
+                            <label for="swapOption">Swap</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <div class="info-box">
+                    <h3 class="section-title-small">Address Info</h3>
+                    <p>Balance: <span id="btcBalance">0 BTC</span></p>
+                </div>
+                 <div class="info-box">
+                    <h3 class="section-title-small">Computer Info</h3>
+                    <p><span id="systemDate">Loading...</span></p>
+                    <p>Physical memory---</p>
+                    <p>Virtual memory---</p>
+                    <p>On version---</p>
+                    <p>OS: <span id="osInfo">Loading...</span></p>
+                    <p>Platform: <span id="platformInfo">Loading...</span></p>
+                 </div>
+                 <div class="refresh-section">
+                     <button class="tool-button refresh-button" id="refreshButton">Refresh</button>
+                 </div>
+            </div>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="bottom-controls">
+            <div class="main-buttons">
+                <button class="tool-button create-button" id="flashButton">Create Transaction</button>
+                <button class="tool-button cancel-button" id="cancelButton">Cancel</button>
+            </div>
+             <div class="confirmation-checkbox">
+                 <input type="checkbox" id="confirmFakeCheckbox" name="confirmFakeCheckbox" checked>
+                 <label for="confirmFakeCheckbox">Make 100% confirmed transaction</label>
+             </div>
+        </div>
+
+         <!-- Auth Links/User Session -->
+        <div id="auth-links" class="auth-section">
+             Don't have an account? <a href="signup.html" class="auth-link">Create New Account</a>
+        </div>
+        <div id="user-session" style="display: none;" class="auth-section">
+            Welcome, <strong id="username-display" class="username"></strong>!
+            <a href="#" id="logout-button" class="logout-link">[Log Out]</a>
+        </div>
+
+        <!-- Processing Section (Hidden Initially) -->
+        <div class="processing-section" id="processingSection">
+            <div class="spinner"></div>
+            <div>Processing...</div>
+        </div>
+
+    </div> <!-- End App Container -->
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="universalModalOverlay">
+        <div class="modal-content" id="universalModalContent"></div>
+    </div>
+
+    <!-- Link to the EXTERNAL script.js file -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>

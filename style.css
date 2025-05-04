@@ -1,0 +1,148 @@
+/* --- Custom CSS Variables and Base Styles --- */
+:root {
+    /* CMD Theme Colors */
+    --cmd-bg: #000000; /* Black */
+    --cmd-text: #00FF00; /* Bright Green */
+    --cmd-text-dim: #00A000; /* Dimmer Green */
+    --cmd-border: #333333; /* Dark Grey for subtle borders */
+    --cmd-border-accent: #00FF00; /* Green for input borders */
+    --cmd-placeholder: #008000; /* Dark Green */
+    --cmd-button-bg: #222222; /* Dark Grey Button BG */
+    --cmd-button-hover-bg: #333333; /* Slightly Lighter Grey */
+    --cmd-error: #FF0000; /* Red for errors */
+    --cmd-warning: #FFFF00; /* Yellow for warnings */
+    --cmd-success: #00FF00; /* Green for success */
+    --cmd-link-alt-color: #FFFF00; /* Yellow for specific links */
+
+    /* Assign CMD colors */
+    --primary-color: var(--cmd-text);
+    --background-color: var(--cmd-bg);
+    --text-color: var(--cmd-text);
+    --input-bg: var(--cmd-bg);
+    --glow-color: rgba(0, 255, 0, 0.3);
+    --placeholder-color: var(--cmd-placeholder);
+    --card-bg: var(--cmd-bg);
+    --secondary-text-color: var(--cmd-text-dim);
+    --spinner-track: var(--cmd-border);
+    --error-color: var(--cmd-error);
+    --warning-color: var(--cmd-warning);
+    --success-color: var(--cmd-success);
+
+    /* Tool specific vars */
+    --tool-border-color: var(--cmd-border);
+    --tool-input-border: var(--cmd-border-accent);
+    --tool-button-bg: var(--cmd-button-bg);
+    --tool-button-border: var(--cmd-border-accent);
+    --tool-button-text: var(--cmd-text);
+    --tool-label-color: var(--cmd-text);
+    --tool-title-color: var(--cmd-text);
+}
+
+body { margin: 0; font-family: 'Consolas', 'Lucida Console', 'Courier New', monospace; background-color: var(--background-color); color: var(--text-color); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; box-sizing: border-box; overflow-x: hidden; }
+.tool-container { background-color: var(--card-bg); border: 1px solid var(--tool-border-color); padding: 20px; border-radius: 0; width: 100%; max-width: 850px; box-shadow: none; margin: 20px auto; }
+.tool-title { font-size: 1.2em; color: var(--tool-title-color); margin-bottom: 20px; text-align: left; font-weight: normal; text-shadow: none; }
+.content-columns { display: flex; gap: 20px; margin-bottom: 20px; }
+.left-column { flex: 2; display: flex; flex-direction: column; gap: 15px; }
+.right-column { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+.input-group { margin-bottom: 10px; }
+.input-group label { display: block; color: var(--tool-label-color); margin-bottom: 5px; font-size: 0.9em; font-weight: normal; }
+.input-group input[type="text"], .input-group input[type="number"], .select-wrapper select { width: 100%; background-color: var(--input-bg); border: 1px solid var(--tool-input-border); border-radius: 0; padding: 8px 10px; box-sizing: border-box; color: var(--text-color); font-size: 0.9em; font-family: inherit; box-shadow: none; caret-color: var(--text-color); }
+.input-group input:focus, .select-wrapper select:focus { outline: none; border-color: var(--text-color); box-shadow: none; }
+.input-group input::placeholder { color: var(--placeholder-color); opacity: 1; }
+.input-group input::-moz-placeholder { color: var(--placeholder-color); opacity: 1; }
+.input-group input:-ms-input-placeholder { color: var(--placeholder-color); opacity: 1; }
+.input-group input::-ms-input-placeholder { color: var(--placeholder-color); opacity: 1; }
+.fee-deposit-section { border: 1px solid var(--tool-border-color); padding: 15px; border-radius: 0; margin-bottom: 15px; }
+.section-title-small { color: var(--tool-label-color); font-weight: normal; font-size: 0.95em; margin-bottom: 10px; border-bottom: 1px solid var(--tool-border-color); padding-bottom: 5px; }
+.fee-item-condensed { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 5px 0; }
+.fee-item-condensed .fee-header { display: flex; align-items: center; gap: 6px; font-size: 0.85em; color: var(--text-color); }
+.fee-item-condensed .icon-placeholder { display: none; }
+.fee-item-condensed .fee-value { display: flex; align-items: center; gap: 8px; font-size: 0.85em; }
+.fee-item-condensed .fee-value .value { font-weight: normal; color: var(--text-color); }
+.add-button-small { background-color: var(--cmd-bg); color: var(--cmd-text); border: 1px solid var(--cmd-border-accent); border-radius: 0; width: 22px; height: 22px; font-size: 1.1em; line-height: 20px; text-align: center; cursor: pointer; transition: background-color 0.2s ease; flex-shrink: 0; font-family: inherit; }
+.add-button-small:hover:not(:disabled) { background-color: var(--cmd-button-bg); }
+.add-button-small:disabled { border-color: var(--cmd-border); color: var(--cmd-text-dim); cursor: not-allowed; opacity: 0.5; background-color: var(--cmd-bg); pointer-events: none; }
+.deposit-status-message.compact { color: var(--warning-color); font-size: 0.8em; padding: 5px; margin-top: 5px; margin-bottom: 10px; text-align: center; display: none; border: 1px dashed var(--warning-color); border-radius: 0; background: none; }
+.deposit-status-message.show { display: block; }
+.input-group.compact-select label { margin-bottom: 3px; font-size: 0.85em; }
+.select-wrapper { position: relative; display: block; width: 100%; }
+.select-wrapper::after { content: '▼'; font-size: 10px; color: var(--text-color); position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.select-wrapper select { cursor: pointer; padding-right: 25px; appearance: none; -webkit-appearance: none; -moz-appearance: none; }
+.settings-box { border: 1px solid var(--tool-border-color); padding: 15px; border-radius: 0; display: flex; flex-direction: column; gap: 15px; }
+.setting-section { }
+.checkbox-group, .radio-group { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.checkbox-group label, .radio-group label { color: var(--tool-label-color); font-size: 0.85em; cursor: pointer; margin-bottom: 0; font-weight: normal; }
+.checkbox-group input[type="checkbox"], .radio-group input[type="radio"] { margin: 0; cursor: pointer; accent-color: var(--cmd-text); }
+.fee-input { width: 80px !important; margin-left: auto; flex-shrink: 0; padding: 4px 6px !important; font-size: 0.8em !important; }
+.delay-inputs { display: flex; align-items: center; gap: 10px; margin-left: 25px; margin-top: 5px; }
+.delay-inputs label { font-size: 0.85em; color: var(--tool-label-color); margin-bottom: 0; }
+.delay-inputs input { width: 60px; padding: 4px 6px; font-size: 0.85em; }
+.additional-options { gap: 15px; margin-top: 10px; }
+.info-box { border: 1px solid var(--tool-border-color); padding: 15px; border-radius: 0; background-color: var(--cmd-bg); font-size: 0.85em; line-height: 1.6; }
+.info-box h3 { font-weight: normal; }
+.info-box p { margin: 5px 0; color: var(--secondary-text-color); }
+.info-box p span { color: var(--text-color); font-weight: normal; }
+.refresh-section { margin-top: auto; text-align: right; }
+.bottom-controls { margin-top: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; padding-top: 15px; border-top: 1px solid var(--tool-border-color); }
+.main-buttons { display: flex; gap: 10px; }
+.tool-button { background-color: var(--tool-button-bg); border: 1px solid var(--tool-button-border); color: var(--tool-button-text); padding: 8px 20px; border-radius: 0; cursor: pointer; font-size: 0.9em; font-weight: normal; font-family: inherit; transition: background-color 0.2s; box-shadow: none; }
+.tool-button:hover { background-color: var(--cmd-button-hover-bg); border-color: var(--tool-button-border); }
+.tool-button.refresh-button { padding: 6px 15px; font-size: 0.85em; }
+/* Style for disabled state (opacity/cursor) - will be applied via JS */
+.tool-button:disabled, .tool-button.opacity-50, .tool-button.cursor-not-allowed {
+    background-color: var(--cmd-button-bg);
+    border-color: var(--cmd-border);
+    color: var(--cmd-text-dim);
+    cursor: not-allowed;
+    opacity: 0.7;
+ }
+.confirmation-checkbox { display: flex; align-items: center; gap: 8px; }
+.confirmation-checkbox label { font-size: 0.85em; color: var(--tool-label-color); cursor: pointer; font-weight: normal; }
+.confirmation-checkbox input[type="checkbox"] { cursor: pointer; accent-color: var(--cmd-text); }
+.auth-section { text-align: center; margin-top: 25px; font-size: 0.85em; color: var(--secondary-text-color); }
+.auth-section .auth-link { color: var(--cmd-link-alt-color); text-decoration: none; font-weight: bold; }
+.auth-section .auth-link:hover { text-decoration: underline; color: #FFFF80; }
+.auth-section .logout-link { color: var(--cmd-text); text-decoration: none; }
+.auth-section .logout-link:hover { text-decoration: underline; }
+.auth-section .username { color: var(--cmd-text); font-weight: normal; }
+.processing-section { display: none; flex-direction: column; align-items: center; gap: 10px; color: var(--secondary-text-color); margin-top: 20px; }
+.spinner { width: 30px; height: 30px; border: 4px solid var(--spinner-track); border-top-color: var(--text-color); border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.processing-section.show { display: flex; }
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 15px; box-sizing: border-box; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; }
+.modal-overlay.show { display: flex; opacity: 1; visibility: visible; transition: opacity 0.3s ease-in-out; }
+.modal-content { background-color: var(--cmd-bg); color: var(--cmd-text); padding: 20px; border-radius: 0; width: 90%; max-width: 450px; box-shadow: none; text-align: left; border: 1px solid var(--cmd-border); transform: scale(0.95) translateY(10px); opacity: 0; transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease-out; overflow-y: auto; max-height: 90vh; font-family: inherit; }
+.modal-overlay.show .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+.modal-header { display: flex; align-items: center; justify-content: flex-start; gap: 10px; margin-bottom: 15px; font-size: 1em; font-weight: normal; color: var(--cmd-text); border-bottom: 1px solid var(--cmd-border); padding-bottom: 10px; }
+.modal-icon-placeholder { display: none; }
+.modal-body { margin: 15px 0; color: var(--cmd-text); text-align: left; }
+.modal-body label { display: block; margin-bottom: 8px; font-size: 0.9em; color: var(--cmd-text); }
+.modal-body input[type="number"] { width: 100%; background-color: var(--input-bg); border: 1px solid var(--tool-input-border); border-radius: 0; padding: 8px 10px; box-sizing: border-box; color: var(--text-color); font-size: 0.9em; box-shadow: none; font-family: inherit; caret-color: var(--text-color); }
+.modal-body input[type="number"]:focus { outline: none; border-color: var(--text-color); }
+.modal-body input::placeholder { color: var(--placeholder-color); }
+.modal-error { color: var(--error-color); font-size: 0.85em; margin-top: 8px; text-align: left; display: none; min-height: 1.2em; font-weight: normal; }
+.modal-error.show { display: block; }
+.modal-separator { display: none; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; flex-wrap: wrap; padding-top: 15px; border-top: 1px solid var(--cmd-border); }
+.modal-button { background-color: var(--tool-button-bg); border: 1px solid var(--tool-button-border); padding: 8px 15px; cursor: pointer; font-weight: normal; font-size: 0.9em; color: var(--tool-button-text); border-radius: 0; transition: background-color 0.2s; flex-grow: 0; font-family: inherit; box-shadow: none; text-transform: none; }
+.modal-button:hover:not(:disabled) { background-color: var(--cmd-button-hover-bg); }
+.modal-button:disabled { background-color: var(--tool-button-bg); border-color: var(--cmd-border); color: var(--cmd-text-dim); opacity: 0.7; cursor: not-allowed; }
+.deposit-screen-content h2 { text-align: left; color: var(--cmd-text); font-weight: normal; font-size: 1em; margin-bottom: 15px; }
+.deposit-info-line { display: flex; flex-wrap: wrap; align-items: center; margin-bottom: 8px; font-size: 0.9em; }
+.deposit-info-line .label { color: var(--cmd-text); font-weight: normal; margin-right: 8px; flex-shrink: 0; min-width: 80px; text-align: left; }
+.deposit-info-line .value { color: var(--cmd-text); word-break: break-all; font-family: inherit; flex-grow: 1; text-align: left; font-weight: normal; }
+.deposit-info-line .value.crypto-amount { font-weight: normal; margin-left: 5px; color: var(--cmd-text); font-size: 1em; }
+.deposit-info-line .icon { display: none; }
+.copy-button { color: var(--cmd-text); cursor: pointer; font-size: 0.9em; margin-left: 10px; padding: 2px 5px; font-weight: normal; background: none; border: none; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; font-family: inherit; text-decoration: underline; }
+.copy-button:hover { opacity: 0.8; }
+.copy-button i { display: none; }
+.qr-section { text-align: left; margin: 20px 0; }
+.qr-code-container { display: inline-block; background-color: white; padding: 5px; border: 1px solid var(--cmd-border-accent); border-radius: 0; margin-bottom: 10px; box-shadow: none; }
+#qr-code-container canvas, #qr-code-container img { display: block !important; width: 120px !important; height: 120px !important; margin: 0; }
+.qr-section p { font-size: 0.9em; color: var(--cmd-text); margin-bottom: 5px; }
+.deposit-note { font-size: 0.9em; color: var(--warning-color); font-weight: normal; margin-top: 20px; margin-bottom: 15px; padding: 10px; border: 1px dashed var(--warning-color); border-radius: 0; background: none; text-align: left; line-height: 1.5; }
+.deposit-note i { margin-right: 8px; }
+.popup { display: none !important; }
+
+@media (max-width: 768px) { .content-columns { flex-direction: column; } .tool-container { max-width: 500px; } .refresh-section { margin-top: 15px; text-align: center; } .bottom-controls { flex-direction: column; align-items: center; } }
+@media (max-width: 480px) { .tool-title { font-size: 1.1em; } .input-group input, .select-wrapper select { font-size: 0.85em; padding: 6px 8px; } .tool-button { padding: 6px 15px; font-size: 0.85em; } .delay-inputs { flex-direction: column; align-items: flex-start; gap: 5px; margin-left: 15px;} .delay-inputs input { width: 80px; } .fee-input { width: 70px !important; } .info-box { font-size: 0.8em; } }
